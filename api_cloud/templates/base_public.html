@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% block head_info %}
+    <a href='{%url "api_user:user_logout" %} '>注销</a>
+    <a href='{%url "api_user:user_password" %} ' target="_blank">修改密码</a>
+    <a id="user_real_name"></a>
+{% endblock %}
+{% block content %}
+    <div id="center" class="centerDiv">
+        <div class="leftPanel" id="leftMenu">
+            {% block leftinfo %}{% endblock %}
+        </div>
+        <div class="rightPanel" id="rightInfo">
+            {% block rightinfo %}{% endblock %}
+        </div>
+    </div>
+{% endblock %}

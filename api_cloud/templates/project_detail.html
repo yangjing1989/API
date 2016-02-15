@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block title %}编辑项目{% endblock %}
+{% block extra_head %}
+<script src="/static/js/project/detail.js"></script>
+{% endblock %}
+{% block content %}
+<div id="center" class="centerDiv">
+    <div style="width: 600px;text-align: center;margin-left: auto;margin-right: auto;padding-top: 40px;">
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label for="hosts_name" class="col-sm-3 control-label">所属项目</label>
+                <div class="col-sm-9" >
+                    <div class="ztree" id="project_parent_id"></div>
+                </div>
+            </div>
+            <input style="display: none" value="{{ project_info.id }}" id="project_id">
+            <div class="form-group">
+                <label for="hosts_name" class="col-sm-3 control-label">项目名称</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="project_name" placeholder="项目名称" required="required" value="{{ project_info.name }}">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="hosts_name" class="col-sm-3 control-label">项目文档</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="api_document" placeholder="项目文档" required="required" value="{{ project_info.api_document }}">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div style="text-align: center;">
+                    <button type="button" class="btn btn-primary" style="width: 80px;" id="edit_project_save">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

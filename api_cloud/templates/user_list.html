@@ -1,0 +1,68 @@
+{% extends "base_public.html" %}
+{% block title %}用户管理{% endblock %}
+{% block extra_head %}
+    <script src="/static/js/user/list.js"></script>
+{% endblock %}
+{% block leftinfo %}
+    <a href='{%url "api_user:user_list" %}'  class="list-group-item active" id="showProjects">用户管理</a>
+    <a href='{%url "api_project:project_list" %}'  class="list-group-item" id="showProjects">项目管理</a>
+    <a href='{%url "api_hosts:hosts_list" %}' id="showHosts" class="list-group-item">服务器 Hosts</a>
+{% endblock %}
+{% block rightinfo %}
+
+    <form class="form-inline">
+        <div>
+            <a href='{%url "api_user:user_new" %}' target="_blank" class="btn btn-primary" style="width: 80px;">添加</a>
+        </div>
+        <div class="form-group" ><label>共计：{{ user_info.paginator.count }} 条，共 {{ user_info.paginator.num_pages }} 页</label></div>
+        <div class="form-group" style="margin-left: 20px;">
+            <ul class="pagination">
+                {% if user_info.has_previous %}
+                    <li><a href="?page={{ user_info.previous_page_number }}">前一页</a></li>
+                {% else %}
+                    <li><a class="disabled">前一页</a></li>
+                {% endif %}
+                {% for p in page_range %}
+                    {% ifequal p user_info.number %}
+                      <li class="active"><a>{{p}}</a></li>
+                    {% else %}
+                      <li><a href="?page={{p}}" title="第{{p}}页">{{p}}</a><li>
+                    {% endifequal %}
+                {% endfor %}
+                {% if user_info.has_next %}
+                <li><a href="?page={{ user_info.next_page_number }}">后一页</a></li>
+                {% else %}
+                <li><a class="disabled">后一页</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </form>
+    <table class="table table-bordered table-striped" id="user_list">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>用户名</th>
+				<th>真实姓名</th>
+                <th>邮箱</th>
+                <th>是否管理员</th>
+                <th>操作</th>
+			</tr>
+		</thead>
+        {% for users in user_info %}
+             <tr>
+                 <td>{{ users.id }}</td>
+                 <td><a href='{% url "api_user:user_detail" %}?user_id={{ users.id }}'  target="_blank">{{ users.username }}</a></td>
+                 <td>{{ users.first_name }}</td>
+                 <td>{{ users.email }}</td>
+                 {% if users.is_superuser %}
+                 <td style="color:#72e66a">{{ users.is_superuser }}</td>
+                 {% else %}
+                 <td>{{ users.is_superuser }}</td>
+                 {% endif %}
+                 <td>
+                     <a class="btn btn-danger" href='#' style="width: 80px;" id="delete{{ users.id }}">删除</a>
+                 </td>
+             </tr>
+        {% endfor %}
+	</table>
+{% endblock %}

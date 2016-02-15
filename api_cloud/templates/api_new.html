@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+{% block title %}新建接口{% endblock %}
+{% block extra_head %}
+    <script src="/static/js/public/jquery.jsonview.js"></script>
+    <link rel="stylesheet" href="/static/css/jquery.jsonview.css">
+    <script src="/static/js/api/add.js"></script>
+    <script src="/static/js/api/detail.js"></script>
+{% endblock %}
+{% block content %}
+<div id="center" class="centerDiv">
+    <div class="api_total">
+        <div class="form-group">
+            {% if project_id %}
+                <input id="api_project_id" value="{{ project_id }}" style="display: none">
+            {% else %}
+                <input id="api_project_id" value="{{ api_info.project_id }}" style="display: none">
+            {% endif %}
+            <div class="form-inline" role="form" style="margin-top: 10px;">
+                <div class="new_line_div">
+                    <label>所属项目：{{ project_name }}</label>
+                </div>
+                <!--接口名称和所属项目-->
+                 <div class="new_line_div">
+                     <input type="text" class="api_input" placeholder="接口名称" id="api_name_txt" style="width: 100%" value="{{ api_info.name }}">
+                 </div>
+                <!--接口名称和所属项目-->
+
+                <!--请求url等-->
+                <div class="new_line_div">
+                    <div class="form-group" style="display: inline-block;width: 100%;">
+                        <select class="form-control" id="api_http_type" style="width: 150px;">
+                                <option value="1" {% if api_info.api_http_type == 1 %}selected="selected" {% endif %}>HTTP</option>
+                                <option value="2" {% if api_info.api_http_type == 2 %}selected="selected" {% endif %}>HTTPS</option>
+                        </select>
+                        <input type="text" class="api_input" placeholder="Domain" id="api_domain_txt" style="width: 200px;" value="{{ api_info.api_domain }}">
+                        <input type="text" placeholder="Url" class="api_input" style="width:50%;" id="api_url_txt" value="{{ api_info.api_url }}">
+
+                        <select class="form-control" id="api_method">
+                                <option value="1" {% if api_info.api_method == 1 %}selected="selected" {% endif %}>GET</option>
+                                <option value="2" {% if api_info.api_method == 2 %}selected="selected" {% endif %}>POST</option>
+                        </select>
+                        <button class="btn btn-primary" data-toggle="collapse" data-target="#url_params">URL Params</button>
+                        <button class="btn btn-primary" data-toggle="collapse" data-target="#url_headers">Headers</button>
+                        <button class="btn btn-primary" data-toggle="collapse" data-target="#url_remarks">备注</button>
+                    </div>
+                </div>
+                <!--请求url等-->
+
+                <!--请求参数、请求头、备注-->
+                <div class="new_line_div">
+                    <div id="url_params" class="collapse">
+                        <input value='{{ api_info.url_list }}' style="display: none" id="default_url_list">
+                    </div>
+                    <div id="url_headers" class="collapse">
+                        <input value='{{ api_info.api_headers }}' style="display: none" id="default_headers">
+                    </div>
+                    <div id="url_remarks" class="collapse" style="margin-top: 5px;">
+                        <textarea class="form-control"  style="width: 100%;height: 100px;resize: vertical;" id="remarks_data">{{ api_info.remarks }}</textarea>
+                    </div>
+                </div>
+                <!--请求参数、请求头、备注-->
+
+                <!--请求体-->
+                <div id="post_body_div" style="display: none">
+                    <div class="new_line_div">
+                        <div class="btn-group" id="body_btn">
+                            <button type="button" class="btn btn-default active" id="formdata_btn">form-data</button>
+                            <button type="button" class="btn btn-default" id="urlencoded_btn">x-www-form-urlencoded</button>
+                            <button type="button" class="btn btn-default" id="raw_btn">raw</button>
+                        </div>
+                    </div>
+                    <div class="new_line_div" id="api_body_div">
+                        <input style="display: none" value="{{ api_info.api_body_type }}" id="body_type_txt">
+                        <input value='{{ api_info.api_body_value }}' style="display: none" id="default_body_value">
+                        <div id="body_form_data"></div>
+                        <div id="body_url_data" style="display: none"></div>
+                        <div id="body_raw" style="display: none">
+                            <textarea class="form-control"  style="width: 100%;height: 200px;resize: vertical;" id="body_raw_data"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <!--请求体-->
+
+                <!--请求按钮-->
+                <div class="new_line_div">
+                    <button class="btn btn-success" style="width: 80px;" id="api_save_btn">保存</button>
+                    <button class="btn btn-info" style="width: 80px;" id="api_execute_btn">执行</button>
+                </div>
+                <!--请求按钮-->
+            </div>
+        </div>
+    </div>
+
+    <!--执行结果-->
+       <div style="width: 100%;float: left; padding: 10px;">
+           <label>执行结果：</label>
+           <div id="api_real_result" style="padding-bottom: 40px;">
+               <div id="loading"></div>
+           </div>
+           <div id="api_real_result_no_form" style="display: none;"></div>
+       </div>
+    <!--执行结果-->
+</div>
+{% endblock %}

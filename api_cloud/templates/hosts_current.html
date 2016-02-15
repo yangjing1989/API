@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}当前服务器 Hosts{% endblock %}
+{% block extra_head %}
+    <script src="/static/js/hosts/add.js"></script>
+{% endblock %}
+{% block content %}
+    <div id="center" class="centerDiv">
+        <div style="width: 400px;text-align: center;margin-left: auto;margin-right: auto;padding-bottom: 40px;">
+            <div style="margin-top: 20px; margin-bottom: 20px;text-align: center;">
+                <p class="text-left">服务器 IP 地址：{{ cur_ip }}</p>
+            </div>
+            {% for hosts in cur_hosts %}
+                <div style="text-align: center">
+                <p class="text-left">{{ hosts }}</p>
+                </div>
+
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

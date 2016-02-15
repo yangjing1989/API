@@ -1,0 +1,63 @@
+{% extends "base_public.html" %}
+{% block title %}接口管理{% endblock %}
+{% block extra_head %}
+    <script src="/static/js/api/list.js"></script>
+{% endblock %}
+{% block leftinfo %}
+    <a href='{%url "api_api:api_list" %}'  class="list-group-item active" id="showApis">接口管理</a>
+    <div id="uid_value" style="display: none">{{ uid }}</div>
+    <div id="project_tree" class="ztree"></div>
+{% endblock %}
+{% block rightinfo %}
+    <div style="display: none" id="project_id_val"></div>
+    <form class="form-inline">
+        <div id="btn_div">
+            <a  class="btn btn-info" style="width: 80px;" id="refresh_btn">刷新</a>
+            <a  target="_blank" class="btn btn-primary" style="width: 80px;" id="new_api_btn">添加</a>
+            <a  class="btn btn-danger" style="width: 80px;" id="batch_del_btn">批量删除</a>
+            <a  class="btn btn-success" style="width: 80px;" id="batch_exe_btn">批量执行</a>
+            <a  class="btn btn-warning" style="width: 80px;" id="batch_move_btn" data-toggle="modal" data-target="#move_api">批量移动</a>
+        </div>
+        <div class="form-group" >
+            <label id="data_counts"></label>
+            <label id="page_counts"></label>
+        </div>
+        <div class="form-group" style="margin-left: 20px;" id="show_data_page"></div>
+    </form>
+    <div id="loading" style="text-align: center;" ></div>
+    <div class="alert alert-info alert-dismissable" id="exe_result">
+
+        <div id="exe_result_txt">请选择项目查看接口</div>
+    </div>
+    <table class="table table-bordered table-striped" id="api_list"></table>
+
+<!-- 模态框（Modal） -->
+<div class="modal fade" id="move_api" tabindex="-1" role="dialog"
+   aria-labelledby="myModalLabel" aria-hidden="true">
+   <div class="modal-dialog">
+      <div class="modal-content">
+         <div class="modal-header">
+            <button type="button" class="close"
+               data-dismiss="modal" aria-hidden="true">
+                  &times;
+            </button>
+            <h4 class="modal-title" id="myModalLabel">
+               选择移动到的项目
+            </h4>
+         </div>
+         <div class="modal-body" >
+            <div class="ztree" id="show_all_project"></div>
+         </div>
+         <div class="modal-footer">
+            <button type="button" class="btn btn-default"
+               data-dismiss="modal">关闭
+            </button>
+            <button type="button" class="btn btn-primary" id="save_move_btn">
+               保存
+            </button>
+         </div>
+      </div><!-- /.modal-content -->
+    </div><!-- /.modal -->
+</div>
+
+{% endblock %}

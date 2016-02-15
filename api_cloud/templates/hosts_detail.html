@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Hosts 详情{% endblock %}
+{% block extra_head %}
+    <script src="/static/js/hosts/edit.js"></script>
+{% endblock %}
+{% block content %}
+    <div id="center" class="centerDiv">
+        <div style="width: 800px;text-align: center;margin-left: auto;margin-right: auto;padding-top: 20px;">
+            <input id="hosts_id" value="{{ hosts_info.id }}" style="display: none;">
+            <form class="form-horizontal" role="form">
+                    <div class="form-group">
+                        <label for="hosts_name" class="col-sm-2 control-label">Hosts 名称</label>
+                        <div class="col-sm-10">
+                            <input type="text" class="form-control" id="hosts_name" placeholder="Hosts 名称" required="required" value={{ hosts_info.name }}>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="hosts_content" class="col-sm-2 control-label">内容</label>
+                        <div class="col-sm-10">
+                            <textarea id="hosts_content" class="form-control" rows="25" spellcheck="FALSE">{{ hosts_info.content }}</textarea>
+                        </div>
+                    </div>
+
+
+                    <div class="form-group">
+                        <div style="text-align: center;">
+                            <button type="button" class="btn btn-primary" style="width: 80px;" id="edit_hosts_save">保存</button>
+                        </div>
+                    </div>
+                </form>
+        </div>
+    </div>
+{% endblock %}

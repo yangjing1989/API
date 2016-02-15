@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}{% endblock %}-API</title>
+    <!-- Bootstrap 文件 -->
+    <link rel="shortcut icon" href="/static/images/favicon.ico" />
+    <link href="http://apps.bdimg.com/libs/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet">
+    <script src="http://apps.bdimg.com/libs/jquery/2.0.0/jquery.min.js"></script>
+    <script src="http://apps.bdimg.com/libs/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+    <script src="/static/js/public/jquery.validate.min.js"></script>
+    <script src="/static/js/public/messages_cn.js"></script>
+    <script src="/static/js/public/bootstrap-treeview.js"></script>
+    <script src="/static/js/public/jquery.ztree.all-3.5.min.js"></script>
+    <script src="/static/js/public/jquery.ztree.core-3.5.min.js"></script>
+    <script src="/static/js/public/jquery.ztree.excheck-3.5.min.js"></script>
+    <link rel="stylesheet" href="/static/css/zTreeStyle/zTreeStyle.css">
+    <link rel="stylesheet" href="/static/css/user/login.css">
+    <link rel="stylesheet" href="/static/css/api/table.css">
+    <link rel="stylesheet" href="/static/css/api/api.css">
+    <script src="/static/js/public/public.js"></script>
+    {% block extra_head %}{% endblock %}
+</head>
+<body>
+<div class="topMenu">
+        <label class="logoFont"><a href="{% url 'home' %}">云平台接口管理系统</a></label>
+        {% block head_info %}{% endblock %}
+</div>
+{% block content %}
+{% endblock %}
+ <div class="bottomMenu">
+        Copyright©2015-2016 云平台质量管理部 All Rights Reserved.<span style="margin-left: 20px;">如果您有任何问题，请联系管理员：<a href="mailto:yangjing@smartisan.com">yangjing@smartisan.com</a></span>
+ </div>
+</body>
+</html>

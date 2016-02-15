@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+{% block title %}登录{% endblock %}
+{% block extra_head %}
+    <link rel="stylesheet" href="/static/css/user/login.css">
+{% endblock %}
+{% block content %}
+    <div class="topMenu">
+        <label class="logoFont">云平台接口管理系统</label>
+    </div>
+    <div id="center" class="centerDiv">
+        <div class="login">
+        <div class="loginFrame  box-shadow" >
+            <div class="loginTxt">LOGIN</div>
+            {% if error_user %}
+            <div class="alert alert-danger alert-dismissable" >
+               <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+               {{ error_message }}
+            </div>
+            {% endif %}
+            <form class="form-horizontal" role="form" method="post" id="login_form">
+               <div class="form-group">
+                  <label for="usrname" class="col-sm-3 control-label">用户名</label>
+                  <div class="col-sm-9">
+                     <input type="text" class="form-control" name="username" placeholder="用户名" >
+                  </div>
+               </div>
+               <div class="form-group">
+                  <label for="password" class="col-sm-3 control-label">密码</label>
+                  <div class="col-sm-9">
+                     <input type="password" class="form-control" name="password" placeholder="密码">
+                  </div>
+               </div>
+
+               <div class="form-group">
+                  <div style="text-align: center;">
+                     <button type="submit" class="btn btn-primary" style="width: 80px;">登录</button>
+                      <input type="hidden" name="next" value="{{ next }}" />
+                  </div>
+               </div>
+            </form>
+        </div>
+    </div>
+    </div>
+
+    <script type="text/javascript">
+    $("#login_form").validate({
+        rules:{
+            username: "required",
+            password: "required"
+        }
+    });
+    </script>
+{% endblock %}

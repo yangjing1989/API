@@ -1,0 +1,60 @@
+{% extends "base_public.html" %}
+{% block title %}项目管理{% endblock %}
+{% block extra_head %}
+    <script src="/static/js/project/list.js"></script>
+{% endblock %}
+{% block leftinfo %}
+    <a href='{%url "api_user:user_list" %}'  class="list-group-item" id="showProjects">用户管理</a>
+    <a href='{%url "api_project:project_list" %}'  class="list-group-item active" id="showProjects">项目管理</a>
+    <a href='{%url "api_hosts:hosts_list" %}' id="showHosts" class="list-group-item">服务器 Hosts</a>
+{% endblock %}
+{% block rightinfo %}
+
+    <form class="form-inline">
+        <div>
+            <a href='{%url "api_project:project_new" %}' target="_blank" class="btn btn-primary" style="width: 80px;">添加</a>
+        </div>
+        <div class="form-group" ><label>共计：{{ project_info.paginator.count }} 条，共 {{ project_info.paginator.num_pages }} 页</label></div>
+        <div class="form-group" style="margin-left: 20px;">
+            <ul class="pagination">
+                {% if project_info.has_previous %}
+                    <li><a href="?page={{ project_info.previous_page_number }}">前一页</a></li>
+                {% else %}
+                    <li><a class="disabled">前一页</a></li>
+                {% endif %}
+                {% for p in page_range %}
+                    {% ifequal p project_info.number %}
+                      <li class="active"><a>{{p}}</a></li>
+                    {% else %}
+                      <li><a href="?page={{p}}" title="第{{p}}页">{{p}}</a><li>
+                    {% endifequal %}
+                {% endfor %}
+                {% if project_info.has_next %}
+                <li><a href="?page={{ project_info.next_page_number }}">后一页</a></li>
+                {% else %}
+                <li><a class="disabled">后一页</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </form>
+    <table class="table table-bordered table-striped" id="project_list">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>项目名称</th>
+				<th>项目文档</th>
+                <th>操作</th>
+			</tr>
+		</thead>
+        {% for projects in project_info %}
+             <tr>
+                 <td>{{ projects.id }}</td>
+                 <td><a href='{% url "api_project:project_detail" %}?project_id={{ projects.id }}'  target="_blank">{{ projects.name }}</a></td>
+                 <td><a href="{{ projects.api_document }}" target="_blank">查看接口文档</a></td>
+                 <td>
+                    <a class="btn btn-danger" href='#' style="width: 80px;" id="delete{{ projects.id }}">删除</a>
+                 </td>
+             </tr>
+        {% endfor %}
+	</table>
+{% endblock %}

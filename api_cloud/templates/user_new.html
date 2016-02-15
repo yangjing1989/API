@@ -1,0 +1,67 @@
+{% extends "base.html" %}
+{% block title %}新建用户{% endblock %}
+{% block extra_head %}
+<script src="/static/js/user/add.js"></script>
+{% endblock %}
+{% block content %}
+<div id="center" class="centerDiv">
+    <div style="width: 400px;margin-left: auto;margin-right: auto;padding-top: 40px;text-align: center">
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label for="hosts_name" class="col-sm-3 control-label">用户名</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="user_name" placeholder="用户名" required="required" >
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="hosts_name" class="col-sm-3 control-label">真实姓名</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="user_real_name" placeholder="真实姓名" required="required" >
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="hosts_name" class="col-sm-3 control-label">密码</label>
+                <div class="col-sm-9">
+                    <input type="password" class="form-control" id="user_password" placeholder="密码" >
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="hosts_name" class="col-sm-3 control-label">确认密码</label>
+                <div class="col-sm-9">
+                    <input type="password" class="form-control" id="user_re_password" placeholder="确认密码" >
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="hosts_name" class="col-sm-3 control-label">邮箱</label>
+                <div class="col-sm-9">
+                    <input type="text" class="form-control" id="user_email" placeholder="邮箱" >
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="hosts_name" class="col-sm-3 control-label"></label>
+                <div  class="col-sm-9" style="text-align: left">
+                    <input type="checkbox" value="" id="is_admin">是否为管理员
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="hosts_name" class="col-sm-3 control-label">权限</label>
+                <div  class="col-sm-9" style="text-align: left" >
+                    <div class="ztree" id="user_permission"></div>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <div style="text-align: center;">
+                    <button type="button" class="btn btn-primary" style="width: 80px;" id="add_user_save">保存</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

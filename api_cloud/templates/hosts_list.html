@@ -1,0 +1,68 @@
+{% extends "base_public.html" %}
+{% block title %}Hosts管理{% endblock %}
+{% block extra_head %}
+    <script src="/static/js/hosts/list.js"></script>
+{% endblock %}
+{% block leftinfo %}
+    <a href='{%url "api_user:user_list" %}'  class="list-group-item" id="showProjects">用户管理</a>
+    <a href='{%url "api_project:project_list" %}'  class="list-group-item" id="showProjects">项目管理</a>
+    <a href='{%url "api_hosts:hosts_list" %}' id="showHosts" class="list-group-item active">服务器 Hosts</a>
+{% endblock %}
+{% block rightinfo %}
+
+    <form class="form-inline">
+        <div>
+            <a href='{%url "api_hosts:hosts_new" %}' target="_blank" class="btn btn-primary" style="width: 80px;">添加</a>
+            <a href='{%url "api_hosts:hosts_current" %}' target="_blank" style="float: right;" class="btn btn-default">查看当前系统 Hosts</a>
+        </div>
+        <div class="form-group" ><label>共计：{{ hosts_info.paginator.count }} 条，共 {{ hosts_info.paginator.num_pages }} 页</label></div>
+        <div class="form-group" style="margin-left: 20px;">
+            <ul class="pagination">
+                {% if hosts_info.has_previous %}
+                    <li><a href="?page={{ hosts_info.previous_page_number }}">前一页</a></li>
+                {% else %}
+                    <li><a class="disabled">前一页</a></li>
+                {% endif %}
+                {% for p in page_range %}
+                    {% ifequal p hosts_info.number %}
+                      <li class="active"><a>{{p}}</a></li>
+                    {% else %}
+                      <li><a href="?page={{p}}" title="第{{p}}页">{{p}}</a><li>
+                    {% endifequal %}
+                {% endfor %}
+                {% if hosts_info.has_next %}
+                <li><a href="?page={{ hosts_info.next_page_number }}">后一页</a></li>
+                {% else %}
+                <li><a class="disabled">后一页</a></li>
+                {% endif %}
+            </ul>
+        </div>
+    </form>
+    <table class="table table-bordered table-striped" id="api_list">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th>名称</th>
+				<th>Hosts内容</th>
+                <th>操作</th>
+			</tr>
+		</thead>
+        {% for hosts in hosts_info %}
+             <tr>
+                 <td>{{ hosts.id }}</td>
+                 <td><a href='{% url "api_hosts:hosts_detail" %}?hosts_id={{ hosts.id }}'  target="_blank">{{ hosts.name }}</a></td>
+                 <td><textarea class="form-control" rows="5" style="resize: vertical;" readonly="readonly">{{ hosts.content }}</textarea></td>
+                 <td width="280px;">
+                     {% if hosts.is_current %}
+                         <button type="button" class="btn btn-warning" disabled="disabled">当前 Hosts</button>
+                     {% else %}
+                         <a class="btn btn-info" href='{% url "api_hosts:hosts_change" %}?hosts_id={{ hosts.id }}' style="width: 80px;">切换</a>
+                         <a class="btn btn-danger" href='#' style="width: 80px;" id="delete{{ hosts.id }}">删除</a>
+                         <a href='{%url "api_hosts:hosts_new" %}?hosts_id={{ hosts.id }}' target="_blank" class="btn btn-primary">复制添加</a>
+                     {% endif %}
+
+                 </td>
+             </tr>
+        {% endfor %}
+	</table>
+{% endblock %}
