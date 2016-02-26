@@ -145,7 +145,6 @@ def hosts_new_hosts(request):
 
 @login_required
 def hosts_show_current(request):
-    public.is_admin(request)
     try:
         if "Windows" in platform.platform():
             hosts_file_dir = "C:\Windows\System32\drivers\etc"

@@ -4,6 +4,7 @@
     <script src="/static/js/api/list.js"></script>
 {% endblock %}
 {% block leftinfo %}
+    <a href='{%url "api_hosts:hosts_current" %}' target="_blank"  class="list-group-item" id="showHosts">查看服务器 Hosts</a>
     <a href='{%url "api_api:api_list" %}'  class="list-group-item active" id="showApis">接口管理</a>
     <div id="uid_value" style="display: none">{{ uid }}</div>
     <div id="project_tree" class="ztree"></div>
