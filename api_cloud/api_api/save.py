@@ -29,56 +29,49 @@ def public_save(request):
         error_code = 100004
     else:
         if api_id:
-            if ApiApi.objects.filter(name=api_name, status=1).exclude(id=api_id):
-                error_code = 100005
-            else:
-                update_api = ApiApi.objects.get(id=api_id)
-                try:
-                    error_code = 0
-                    update_api.name = api_name
-                    update_api.api_http_type = api_http_type
-                    update_api.api_url = api_url
-                    update_api.url_list = url_list
-                    update_api.api_domain = api_domain
-                    update_api.api_method = api_method
-                    update_api.api_headers = api_headers
-                    update_api.api_body_type = api_body_type
-                    update_api.api_body_value = api_body_value
-                    update_api.remarks = api_remarks
-                    update_api.creater = uid
-                    update_api.update_time = create_time
-                    update_api.api_expect_result = api_result
-                    update_api.save()
-                    api_id = update_api.id
-                    result["api_id"] = api_id
-                except Exception as ex:
-                    heads["exception"] = str(ex)
-                    error_code = 110000
-                    print ex
+            update_api = ApiApi.objects.get(id=api_id)
+            try:
+                error_code = 0
+                update_api.name = api_name
+                update_api.api_http_type = api_http_type
+                update_api.api_url = api_url
+                update_api.url_list = url_list
+                update_api.api_domain = api_domain
+                update_api.api_method = api_method
+                update_api.api_headers = api_headers
+                update_api.api_body_type = api_body_type
+                update_api.api_body_value = api_body_value
+                update_api.remarks = api_remarks
+                update_api.creater = uid
+                update_api.update_time = create_time
+                update_api.api_expect_result = api_result
+                update_api.save()
+                api_id = update_api.id
+                result["api_id"] = api_id
+            except Exception as ex:
+                heads["exception"] = str(ex)
+                error_code = 110000
         else:
-            if ApiApi.objects.filter(name=api_name, status=1):
-                error_code = 100005
+            if api_result != "":
+                last_execute_time = create_time
             else:
-                if api_result != "":
-                    last_execute_time = create_time
-                else:
-                    last_execute_time = None
-                add_api = ApiApi(name=api_name,
-                                 api_http_type=api_http_type, api_url=api_url, project_id=project_id,
-                                 url_list=url_list, api_domain=api_domain,
-                                 api_method=api_method, api_headers=api_headers,
-                                 api_body_type=api_body_type, api_body_value=api_body_value,
-                                 remarks=api_remarks, create_time=create_time, api_expect_result=api_result,
-                                 update_time=create_time, creater=uid, last_execute_time=last_execute_time, status=1)
-                try:
-                    error_code = 0
-                    add_api.save()
-                    add_api_id = add_api.id
-                    result["api_id"] = add_api_id
-                except Exception as ex:
-                    heads["exception"] = str(ex)
-                    error_code = 110000
-                    print ex
+                last_execute_time = None
+            add_api = ApiApi(name=api_name,
+                             api_http_type=api_http_type, api_url=api_url, project_id=project_id,
+                             url_list=url_list, api_domain=api_domain,
+                             api_method=api_method, api_headers=api_headers,
+                             api_body_type=api_body_type, api_body_value=api_body_value,
+                             remarks=api_remarks, create_time=create_time, api_expect_result=api_result,
+                             update_time=create_time, creater=uid, last_execute_time=last_execute_time, status=1)
+            try:
+                error_code = 0
+                add_api.save()
+                add_api_id = add_api.id
+                result["api_id"] = add_api_id
+            except Exception as ex:
+                heads["exception"] = str(ex)
+                error_code = 110000
+                print ex
 
     heads["code"] = error_code
     heads["message"] = errorinfo.change_to_message(error_code)
