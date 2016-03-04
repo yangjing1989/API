@@ -15,13 +15,19 @@ import re
 def get_request_parameters(api_url, url_list, api_domain, api_http_type,
                            api_method, api_headers, api_body_type, api_body_value):
     re_url = ""
-    if api_http_type == 2 or api_http_type == "2":
-        re_url += "https://"
+    domain_start = api_domain.split("//")[0]
+    if domain_start == "http:" or domain_start == "https:":
+        pass
     else:
-        re_url += "http://"
+        if api_http_type == 2 or api_http_type == "2":
+            re_url += "https://"
+        else:
+            re_url += "http://"
     re_url += api_domain
     re_url += api_url
     if url_list != "":
+        if re_url[len(re_url)-1:] != "?":
+            re_url += "?"
         url_list = url_list.encode("utf-8")
         all_urls = url_list.split(',')
         for urls in all_urls:
@@ -110,6 +116,8 @@ def exe_batch_result(request):
 def execute(api_url,url_list,api_domain,api_http_type,api_method,api_headers,api_body_type,api_body_value,api_id):
     parameters = get_request_parameters(api_url,url_list,api_domain,api_http_type,api_method,api_headers,api_body_type,api_body_value)
     domain = parameters["api_domain"]
+    if domain.split("//")[0] == "http:" or domain.split("//")[0] == "https:":
+        domain = domain.split("//")[1]
     url = parameters["api_url"]
     method = parameters["api_method"]
     headers = parameters["api_headers"]
