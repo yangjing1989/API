@@ -42,7 +42,6 @@ def public_save(request):
                 update_api.api_body_type = api_body_type
                 update_api.api_body_value = api_body_value
                 update_api.remarks = api_remarks
-                update_api.creater = uid
                 update_api.update_time = create_time
                 update_api.api_expect_result = api_result
                 update_api.save()
